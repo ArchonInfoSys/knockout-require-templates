@@ -1,71 +1,27 @@
-This little module is used to load knockout templates from the server.
+This little module is used to load knockout templates with requireJS from the server.
 
-It has dependencies on the require plugin text, knockout.js and the [stringTemplateEngine](https://github.com/rniemeyer/SamplePresentation/blob/master/js/stringTemplateEngine.js) by Ryan Niemeyer.
-
-Basically it is used to get a template and add it to knockout.
+It has dependencies on the require text plugin, knockout.js and the [stringTemplateEngine](https://github.com/rniemeyer/SamplePresentation/blob/master/js/stringTemplateEngine.js) by Ryan Niemeyer (included in the project).
 
 It is used something like the following:
 
 ```javascript
-define("MenuModule", ["Core", "knockout", "template!./menuTemplates/menuItem.html"], function (core, knockout, template) {
-   
-   core.register("MenuModule", function (sandbox) {
-      var ko = sandbox.getObservable(),
-      viewModel = {
-         templateName: "menuItem-html",
-         menuItemArray: ko.observableArray()
-      };
-
-      return {
-         activate: function () {
-            sandbox.bind(viewModel);
-            viewModel.menuItemArray.push({
-               name: "Item One"
-            });
-            viewModel.menuItemArray.push({
-               name: "Item Two"
-            });
-            viewModel.menuItemArray.push({
-               name: "Item Three"
-            });
-         },
-         destroy: function () {
-            sandbox.unbind();
-         }
-      };
-   });
+define(["knockout", "template!./templates/my-template.html"], function (ko) {
+   ko.applyBindings({});
 });
 ```
 
-You can also override the default template name that is used:
+Then, in your html file:
+
+```html
+<div data-bind="template: { name: 'my-template' }"></div>
+```
+
+The plugin will chop off the file extension for the template name. Alternatively, you can override the default template name by using `!`:
 
 ```javascript
-define("MenuModule", ["Core", "knockout", "template!./menuTemplates/menuItem.html!myCustomName"], function (core, knockout, template) {
-   
-   core.register("MenuModule", function (sandbox) {
-      var ko = sandbox.getObservable(),
-      viewModel = {
-         templateName: "myCustomName",
-         menuItemArray: ko.observableArray()
-      };
-
-      return {
-         activate: function () {
-            sandbox.bind(viewModel);
-            viewModel.menuItemArray.push({
-               name: "Item One"
-            });
-            viewModel.menuItemArray.push({
-               name: "Item Two"
-            });
-            viewModel.menuItemArray.push({
-               name: "Item Three"
-            });
-         },
-         destroy: function () {
-            sandbox.unbind();
-         }
-      };
-   });
+define(["knockout", "template!./templates/my-template.html!myCustomName"], function (ko) {
+   ko.applyBindings({});
 });
 ```
+
+When using the [r.js](http://requirejs.org/docs/optimization.html) optimizer, the template will be inlined into the script.
