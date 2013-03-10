@@ -7,7 +7,7 @@ Basically it is used to get a template and add it to knockout.
 It is used something like the following:
 
 ```javascript
-define("MenuModule", ["Core", "knockout", "loadKoTemplate!./menuTemplates/menuItem.html"], function (core, knockout, template) {
+define("MenuModule", ["Core", "knockout", "template!./menuTemplates/menuItem.html"], function (core, knockout, template) {
    
    core.register("MenuModule", function (sandbox) {
       var ko = sandbox.getObservable(),
@@ -40,7 +40,7 @@ define("MenuModule", ["Core", "knockout", "loadKoTemplate!./menuTemplates/menuIt
 You can also override the default template name that is used:
 
 ```javascript
-define("MenuModule", ["Core", "knockout", "loadKoTemplate!./menuTemplates/menuItem.html!myCustomName"], function (core, knockout, template) {
+define("MenuModule", ["Core", "knockout", "template!./menuTemplates/menuItem.html!myCustomName"], function (core, knockout, template) {
    
    core.register("MenuModule", function (sandbox) {
       var ko = sandbox.getObservable(),
