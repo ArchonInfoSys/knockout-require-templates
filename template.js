@@ -32,7 +32,13 @@
 		} else {
 			//use the file name sans the path as the template name
 			var parts = name.split("/");
-			templateName = parts[parts.length - 1].split(".").join("-");
+			templateName = parts[parts.length - 1];
+
+			//remove the extension from the template name
+			var extensionIndex = templateName.lastIndexOf(".");
+			if(extensionIndex !== -1) {
+				templateName = templateName.substring(0, extensionIndex);
+			}
 		}
 
 		return templateName;
